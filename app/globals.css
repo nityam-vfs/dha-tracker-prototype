@@ -718,6 +718,15 @@ a {
   font-size: 13.5px;
 }
 
+.status-item-fields {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 20px;
+  margin-top: 6px;
+  font-size: 13px;
+  color: var(--text);
+}
+
 .error-text {
   color: var(--error);
 }
@@ -817,9 +826,9 @@ a {
   flex-wrap: wrap;
 }
 
-.result-row.valid {
-  border-left-color: var(--success);
-  background: #f6fcf8;
+.result-row.found {
+  border-left-color: var(--border);
+  background: #fff;
 }
 
 .result-row.invalid {

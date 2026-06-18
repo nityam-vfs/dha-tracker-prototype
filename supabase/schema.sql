@@ -9,6 +9,8 @@ create table if not exists applications (
   status text not null check (status in ('Under Process', 'Approved', 'Rejected')),
   applicant text,
   type text default 'Visa Application',
+  permit_number text,
+  valid_until date,
   submitted date default now()
 );
 
@@ -23,12 +25,24 @@ create table if not exists users (
 alter table users
   add column if not exists type text not null default 'standard';
 
+-- Migration: add permit columns to an existing applications table.
+alter table applications
+  add column if not exists permit_number text;
+alter table applications
+  add column if not exists valid_until date;
+
 -- Seed data
-insert into applications (passport, vfs_ref, status, applicant, submitted) values
-  ('P12345', 'VFS001', 'Under Process', 'John Doe', '2026-05-12'),
-  ('P99999', 'VFS002', 'Approved', 'Jane Smith', '2026-04-28'),
-  ('P55555', 'VFS003', 'Rejected', 'Michael Brown', '2026-05-01')
+insert into applications (passport, vfs_ref, status, applicant, permit_number, valid_until, submitted) values
+  ('P12345', 'VFS001', 'Under Process', 'John Doe', 'PRM-2026-0001', '2027-05-12', '2026-05-12'),
+  ('P99999', 'VFS002', 'Approved', 'Jane Smith', 'PRM-2026-0002', '2028-04-28', '2026-04-28'),
+  ('P55555', 'VFS003', 'Rejected', 'Michael Brown', null, null, '2026-05-01')
 on conflict do nothing;
+
+-- Backfill the new columns on rows that were seeded before they existed.
+update applications set permit_number = 'PRM-2026-0001', valid_until = '2027-05-12'
+  where passport = 'P12345' and vfs_ref = 'VFS001';
+update applications set permit_number = 'PRM-2026-0002', valid_until = '2028-04-28'
+  where passport = 'P99999' and vfs_ref = 'VFS002';
 
 -- Premium users are created out of band by an admin. They track and view
 -- status for free. Standard users (self sign-ups) pay per record searched.

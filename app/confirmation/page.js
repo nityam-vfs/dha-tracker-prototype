@@ -116,6 +116,20 @@ export default function ConfirmationPage() {
                         {result.application.applicant} •{" "}
                         {result.application.type}
                       </span>
+                      <div className="status-item-fields">
+                        <span>
+                          Permit No:{" "}
+                          <strong>
+                            {result.application.permit_number || "—"}
+                          </strong>
+                        </span>
+                        <span>
+                          Valid Until:{" "}
+                          <strong>
+                            {result.application.valid_until || "—"}
+                          </strong>
+                        </span>
+                      </div>
                     </div>
                   ) : (
                     <div className="status-item-body">

@@ -36,6 +36,14 @@ export default function ApplicationStatus({ application }) {
         <span className="detail-value">{application.vfs_ref}</span>
       </div>
       <div className="detail-row">
+        <span className="detail-label">Permit Number</span>
+        <span className="detail-value">{application.permit_number || "—"}</span>
+      </div>
+      <div className="detail-row">
+        <span className="detail-label">Valid Until</span>
+        <span className="detail-value">{application.valid_until || "—"}</span>
+      </div>
+      <div className="detail-row">
         <span className="detail-label">Submitted On</span>
         <span className="detail-value">{application.submitted || "—"}</span>
       </div>

@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { getSession } from "@/lib/session";
 import { setOrder } from "@/lib/order";
-import StatusBadge from "./StatusBadge";
 import ApplicationStatus from "./ApplicationStatus";
 import Toast from "./Toast";
 
@@ -242,7 +241,7 @@ export default function TrackForm() {
           onClick={handleValidate}
           disabled={validating}
         >
-          {validating ? <span className="spinner" /> : "Validate Applications"}
+          {validating ? <span className="spinner" /> : "Proceed Next Step"}
         </button>
 
         <div className="helper-note">
@@ -277,7 +276,7 @@ export default function TrackForm() {
           {validated.map((result, index) => (
             <div
               key={index}
-              className={`result-row ${result.valid ? "valid" : "invalid"}`}
+              className={`result-row ${result.valid ? "found" : "invalid"}`}
             >
               <div>
                 <div className="result-ref">
@@ -285,22 +284,11 @@ export default function TrackForm() {
                 </div>
                 <div className="result-meta">
                   {result.valid
-                    ? isStandard
-                      ? "Application found"
-                      : `${result.application.applicant} • ${result.application.type}`
+                    ? "Application found"
                     : "No matching application found"}
                 </div>
               </div>
-              {result.valid ? (
-                isStandard ? (
-                  <span className="status-badge status-approved">
-                    <span className="status-dot" />
-                    Valid
-                  </span>
-                ) : (
-                  <StatusBadge status={result.application.status} />
-                )
-              ) : (
+              {!result.valid && (
                 <span className="field-hint error" style={{ margin: 0 }}>
                   Not found
                 </span>
