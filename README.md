@@ -12,14 +12,24 @@ VFS Global. Built with **Next.js (App Router)**, **Node.js API routes**, optiona
 ## ✨ Features
 
 - **Simulated auth** — Email + OTP login (OTP is hardcoded `123456`), session stored in `localStorage`.
-- **Sign-up** — New emails stored in Supabase (or in-memory mock).
-- **Landing page** — Corporate hero + “Track Your Application” CTA + centered login card.
-- **Dashboard** — Two workflows: Paid Customer & Subscribed Customer.
-- **Paid flow** — Validate → simulate payment → view status.
-- **Subscribed flow** — Validate → view status immediately.
-- **API route** — `POST /api/validateApplication` validates passport + VFS reference.
-- **UX polish** — Loading spinners, inline field validation, error alerts, success toast, hover effects.
+- **Login-only home page** — clean centered login card, no marketing content.
+- **User categories (backend only)** — every account is `premium` or `standard`. The category is **never shown in the UI**; it only changes behavior:
+  - **Premium** — created offline by an admin; validates and views status **for free**.
+  - **Standard** — default for self sign-ups; **pays per application searched** ($5 each).
+- **Multi-record search** — add multiple passport / VFS-reference pairs in one go.
+- **Demo payment** — prefilled card details, simulated processing, payment-completion screen.
+- **Order confirmation** — application statuses + a printable-style **invoice** (line items, total, PAID stamp).
+- **API routes** — `POST /api/user` (resolve category) and `POST /api/validateApplication`.
+- **UX polish** — loading spinners, inline field validation, error alerts, success toast, hover effects.
 - VFS branding: Blue `#1E2D6B`, Orange `#F36C21`.
+
+---
+
+## 🔀 User Flows
+
+**Premium** (admin-created): Login → Dashboard → add record(s) → **Validate & View Status** (free, inline).
+
+**Standard** (self sign-up): Login → Dashboard → add record(s) → **Proceed to Payment ($5 × N)** → demo card → **Payment Successful** → **Order Confirmation** (statuses + invoice).
 
 ---
 
@@ -29,23 +39,24 @@ VFS Global. Built with **Next.js (App Router)**, **Node.js API routes**, optiona
 vfs-tracker/
 ├── app/
 │   ├── api/
-│   │   ├── validateApplication/route.js   # POST: validate passport + vfs_ref
-│   │   └── signup/route.js                # POST: register new user
-│   ├── dashboard/page.js                  # Paid vs Subscribed choice
-│   ├── paid/page.js                       # Paid flow
-│   ├── subscribed/page.js                 # Subscribed flow
+│   │   ├── user/route.js                  # POST: get-or-create user, returns category
+│   │   └── validateApplication/route.js   # POST: validate passport + vfs_ref
+│   ├── dashboard/page.js                  # Multi-record track form (behavior by category)
+│   ├── payment/page.js                    # Demo card + payment-completion screen
+│   ├── confirmation/page.js               # Statuses + invoice
 │   ├── globals.css                        # VFS-branded styles
 │   ├── layout.js
-│   └── page.js                            # Landing + login
+│   └── page.js                            # Login-only home page
 ├── components/
-│   ├── ApplicationForm.js                 # Shared lookup form (paid/subscribed)
 │   ├── ApplicationStatus.js
 │   ├── Header.js
 │   ├── LoginForm.js
 │   ├── StatusBadge.js
-│   └── Toast.js
+│   ├── Toast.js
+│   └── TrackForm.js                       # Multi-record entry + branching logic
 ├── lib/
-│   ├── mockData.js                        # Fallback applications + users
+│   ├── mockData.js                        # Fallback applications + users + price
+│   ├── order.js                           # sessionStorage order store (payment flow)
 │   ├── session.js                         # localStorage session helpers
 │   ├── supabaseClient.js                  # Optional Supabase client
 │   └── useRequireAuth.js                  # Client auth guard
@@ -73,14 +84,13 @@ npm run dev
 Open <http://localhost:3000>.
 
 **Demo walkthrough**
-1. On the landing page, enter any email → **Send OTP**.
-2. Enter OTP `123456` → **Verify & Continue**.
-3. Choose **Paid** or **Subscribed**.
-4. Use a demo record:
+1. Enter any email → **Send OTP** → OTP `123456` → **Verify & Continue**.
+2. **Standard user** (any normal email): add one or more records, then **Proceed to Payment** → pay with the prefilled demo card → see the confirmation + invoice.
+3. **Premium user**: log in as `premium@vfs.com` to validate and view status for **free** (no payment).
+4. Demo application records:
    - `P12345` / `VFS001` → Under Process
    - `P99999` / `VFS002` → Approved
    - `P55555` / `VFS003` → Rejected
-5. Paid flow adds a simulated **Proceed to Payment** step before showing status.
 
 ## 🗄️ 3. (Optional) Connect Supabase
 
@@ -123,9 +133,11 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key
 { "valid": false, "message": "No matching application found." }
 ```
 
-### `POST /api/signup`
+### `POST /api/user`
 ```json
-{ "email": "you@example.com" }   // → { "ok": true, "email": "you@example.com" }
+{ "email": "you@example.com" }
+// → { "ok": true, "email": "you@example.com", "type": "standard" }
+// premium@vfs.com → { ..., "type": "premium" }
 ```
 
 ---
@@ -133,6 +145,8 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key
 ## 🧪 Notes & Constraints
 
 - Auth is **simulated** — no real provider, OTP is always `123456`.
-- Payment is **simulated** — no gateway, just a 1.2s delay + success toast.
-- Mock sign-up storage is in-memory and resets on server restart.
+- User category (`premium` / `standard`) is backend-only and never shown in the UI.
+- Premium users are created **out of band** (seeded in `mockData.js` / the `users` table).
+- Payment is **simulated** — no gateway, just a short delay + completion screen. Card details are demo-only; nothing is charged.
+- Mock user storage is in-memory and resets on server restart.
 - Enable proper Supabase RLS policies before any real use.

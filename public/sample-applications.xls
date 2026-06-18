@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+<?mso-application progid="Excel.Sheet"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+ xmlns:o="urn:schemas-microsoft-com:office:office"
+ xmlns:x="urn:schemas-microsoft-com:office:excel"
+ xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet">
+ <Styles>
+  <Style ss:ID="Header">
+   <Font ss:Bold="1" ss:Color="#FFFFFF"/>
+   <Interior ss:Color="#1E2D6B" ss:Pattern="Solid"/>
+   <Alignment ss:Vertical="Center"/>
+  </Style>
+  <Style ss:ID="Cell">
+   <Alignment ss:Vertical="Center"/>
+  </Style>
+ </Styles>
+ <Worksheet ss:Name="Applications">
+  <Table>
+   <Column ss:Width="110"/>
+   <Column ss:Width="90"/>
+   <Column ss:Width="120"/>
+   <Column ss:Width="110"/>
+   <Column ss:Width="120"/>
+   <Column ss:Width="90"/>
+   <Row ss:Height="22">
+    <Cell ss:StyleID="Header"><Data ss:Type="String">Passport</Data></Cell>
+    <Cell ss:StyleID="Header"><Data ss:Type="String">VFS Reference</Data></Cell>
+    <Cell ss:StyleID="Header"><Data ss:Type="String">Applicant</Data></Cell>
+    <Cell ss:StyleID="Header"><Data ss:Type="String">Type</Data></Cell>
+    <Cell ss:StyleID="Header"><Data ss:Type="String">Status</Data></Cell>
+    <Cell ss:StyleID="Header"><Data ss:Type="String">Submitted</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="Cell"><Data ss:Type="String">P12345</Data></Cell>
+    <Cell ss:StyleID="Cell"><Data ss:Type="String">VFS001</Data></Cell>
+    <Cell ss:StyleID="Cell"><Data ss:Type="String">John Doe</Data></Cell>
+    <Cell ss:StyleID="Cell"><Data ss:Type="String">Visa Application</Data></Cell>
+    <Cell ss:StyleID="Cell"><Data ss:Type="String">Under Process</Data></Cell>
+    <Cell ss:StyleID="Cell"><Data ss:Type="String">2026-05-12</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="Cell"><Data ss:Type="String">P99999</Data></Cell>
+    <Cell ss:StyleID="Cell"><Data ss:Type="String">VFS002</Data></Cell>
+    <Cell ss:StyleID="Cell"><Data ss:Type="String">Jane Smith</Data></Cell>
+    <Cell ss:StyleID="Cell"><Data ss:Type="String">Visa Application</Data></Cell>
+    <Cell ss:StyleID="Cell"><Data ss:Type="String">Approved</Data></Cell>
+    <Cell ss:StyleID="Cell"><Data ss:Type="String">2026-04-28</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="Cell"><Data ss:Type="String">P55555</Data></Cell>
+    <Cell ss:StyleID="Cell"><Data ss:Type="String">VFS003</Data></Cell>
+    <Cell ss:StyleID="Cell"><Data ss:Type="String">Michael Brown</Data></Cell>
+    <Cell ss:StyleID="Cell"><Data ss:Type="String">Visa Application</Data></Cell>
+    <Cell ss:StyleID="Cell"><Data ss:Type="String">Rejected</Data></Cell>
+    <Cell ss:StyleID="Cell"><Data ss:Type="String">2026-05-01</Data></Cell>
+   </Row>
+  </Table>
+ </Worksheet>
+</Workbook>

@@ -19,14 +19,16 @@
   box-sizing: border-box;
 }
 
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700;800&display=swap");
+
 html,
 body {
   padding: 0;
   margin: 0;
   background: var(--bg);
   color: var(--text);
-  font-family: "Segoe UI", system-ui, -apple-system, Roboto, Helvetica, Arial,
-    sans-serif;
+  font-family: "Open Sans", "Segoe UI", system-ui, -apple-system, Roboto,
+    Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
 }
 
@@ -37,49 +39,98 @@ a {
 
 /* ---------- Layout ---------- */
 .header {
-  background: var(--vfs-blue);
-  color: #fff;
-  padding: 0 24px;
-  height: 64px;
+  background: #fff;
+  color: var(--vfs-blue);
+  padding: 0 28px;
+  height: 72px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  box-shadow: 0 2px 12px rgba(30, 45, 107, 0.25);
+  border-bottom: 1px solid var(--border);
+  box-shadow: 0 1px 8px rgba(30, 45, 107, 0.06);
   position: sticky;
   top: 0;
   z-index: 50;
+}
+
+.header::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--vfs-orange);
 }
 
 .header-brand {
   display: flex;
   align-items: center;
   gap: 12px;
-  font-weight: 700;
-  font-size: 18px;
-  letter-spacing: 0.3px;
+  cursor: pointer;
 }
 
 .header-logo {
-  width: 36px;
-  height: 36px;
-  border-radius: 9px;
-  background: var(--vfs-orange);
+  width: 42px;
+  height: 42px;
+  border-radius: 8px;
+  background: var(--vfs-blue);
   display: grid;
   place-items: center;
   font-weight: 800;
   color: #fff;
   font-size: 15px;
+  letter-spacing: 0.5px;
+}
+
+.header-wordmark {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.1;
+}
+
+.header-wordmark-top {
+  font-weight: 800;
+  font-size: 18px;
+  color: var(--vfs-blue);
+  letter-spacing: 0.2px;
+}
+
+.header-wordmark-top span {
+  color: var(--vfs-orange);
+}
+
+.header-wordmark-sub {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--muted);
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
 }
 
 .header-actions {
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 16px;
   font-size: 14px;
 }
 
 .header-email {
-  opacity: 0.85;
+  color: var(--muted);
+  font-weight: 600;
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--vfs-blue);
+  border: 1px solid var(--vfs-blue);
+  width: auto;
+  padding: 8px 18px;
+}
+
+.btn-ghost:hover {
+  background: var(--vfs-blue);
+  color: #fff;
 }
 
 .container {
@@ -136,18 +187,6 @@ a {
   background: var(--vfs-orange-dark);
   transform: translateY(-2px);
   box-shadow: 0 16px 40px rgba(243, 108, 33, 0.28);
-}
-
-.btn-ghost {
-  background: transparent;
-  color: #fff;
-  border: 1px solid rgba(255, 255, 255, 0.4);
-  width: auto;
-  padding: 8px 16px;
-}
-
-.btn-ghost:hover {
-  background: rgba(255, 255, 255, 0.12);
 }
 
 .btn-link {
@@ -566,4 +605,310 @@ a {
   .hero h1 {
     font-size: 28px;
   }
+}
+
+/* ---------- Multi-record track form ---------- */
+.record-row {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 18px;
+  margin-bottom: 16px;
+  background: #fbfcfe;
+}
+
+.record-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.record-index {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--vfs-blue);
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+
+.record-remove {
+  color: var(--error);
+}
+
+/* Side-by-side fields on desktop, stacked on mobile */
+.field-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.add-record {
+  display: inline-block;
+  margin-top: 2px;
+}
+
+.summary-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 15px;
+  margin-bottom: 16px;
+}
+
+.summary-box {
+  background: #f4f6fb;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 14px 16px;
+  margin-bottom: 20px;
+}
+
+.summary-box .summary-row {
+  margin-bottom: 8px;
+}
+
+.summary-row.total {
+  border-top: 1px solid var(--border);
+  padding-top: 10px;
+  margin-bottom: 0;
+  font-size: 16px;
+  color: var(--vfs-blue);
+}
+
+/* ---------- Payment ---------- */
+.card-row {
+  display: flex;
+  gap: 14px;
+}
+
+.success-check {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: rgba(31, 157, 85, 0.12);
+  color: var(--success);
+  font-size: 34px;
+  font-weight: 800;
+  display: grid;
+  place-items: center;
+  margin: 0 auto 16px;
+}
+
+/* ---------- Confirmation + Invoice ---------- */
+.confirm-banner {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin-bottom: 26px;
+}
+
+.confirm-banner .success-check {
+  margin: 0;
+  width: 54px;
+  height: 54px;
+  font-size: 28px;
+}
+
+.confirm-grid {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 24px;
+  margin-bottom: 24px;
+}
+
+.status-item {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 14px 16px;
+  margin-bottom: 12px;
+}
+
+.status-item-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.status-item-body {
+  margin-top: 6px;
+  font-size: 13.5px;
+}
+
+.error-text {
+  color: var(--error);
+}
+
+.invoice-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.invoice-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.invoice-head .header-logo {
+  background: var(--vfs-blue);
+}
+
+.invoice-title {
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--vfs-blue);
+  letter-spacing: 1px;
+}
+
+.invoice-meta {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  font-size: 13.5px;
+}
+
+.invoice-total {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 2px solid var(--vfs-blue);
+  font-size: 17px;
+  font-weight: 800;
+  color: var(--vfs-blue);
+}
+
+.paid-stamp {
+  position: absolute;
+  top: 26px;
+  right: -36px;
+  transform: rotate(18deg);
+  background: rgba(31, 157, 85, 0.12);
+  color: var(--success);
+  border: 2px solid var(--success);
+  border-radius: 8px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  padding: 4px 44px;
+  font-size: 13px;
+  opacity: 0.85;
+}
+
+@media (max-width: 720px) {
+  .features,
+  .choice-grid,
+  .confirm-grid {
+    grid-template-columns: 1fr;
+  }
+  .hero h1 {
+    font-size: 28px;
+  }
+  .field-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ---------- Validation results (inline) ---------- */
+.result-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--border);
+  border-radius: 10px;
+  padding: 12px 16px;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+}
+
+.result-row.valid {
+  border-left-color: var(--success);
+  background: #f6fcf8;
+}
+
+.result-row.invalid {
+  border-left-color: var(--error);
+  background: #fef7f7;
+}
+
+.result-ref {
+  font-weight: 700;
+  color: var(--vfs-blue);
+  font-size: 14px;
+}
+
+.result-meta {
+  font-size: 12.5px;
+  color: var(--muted);
+}
+
+/* ---------- Excel / secondary action ---------- */
+.btn-excel {
+  background: #fff;
+  color: #1d6f42;
+  border: 1.5px solid #1d6f42;
+  width: auto;
+  padding: 11px 20px;
+}
+
+.btn-excel:hover:not(:disabled) {
+  background: #1d6f42;
+  color: #fff;
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px rgba(29, 111, 66, 0.22);
+}
+
+.results-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 4px;
+}
+
+/* ---------- Footer (VFS standard) ---------- */
+.site-footer {
+  background: var(--vfs-blue);
+  color: #fff;
+  margin-top: 48px;
+}
+
+.site-footer-inner {
+  max-width: 1040px;
+  margin: 0 auto;
+  padding: 32px 20px 16px;
+}
+
+.site-footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 26px;
+  margin-bottom: 18px;
+}
+
+.site-footer-links a {
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 13.5px;
+  font-weight: 600;
+}
+
+.site-footer-links a:hover {
+  color: var(--vfs-orange);
+}
+
+.site-footer-bottom {
+  border-top: 1px solid rgba(255, 255, 255, 0.18);
+  padding-top: 14px;
+  font-size: 12.5px;
+  color: rgba(255, 255, 255, 0.7);
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
 }

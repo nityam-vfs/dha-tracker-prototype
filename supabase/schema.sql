@@ -14,14 +14,26 @@ create table if not exists applications (
 
 create table if not exists users (
   email text primary key,
+  type text not null default 'standard' check (type in ('premium', 'standard')),
   created_at timestamptz default now()
 );
+
+-- Migration: if the users table was created before user categories existed,
+-- add the column. Safe to run repeatedly.
+alter table users
+  add column if not exists type text not null default 'standard';
 
 -- Seed data
 insert into applications (passport, vfs_ref, status, applicant, submitted) values
   ('P12345', 'VFS001', 'Under Process', 'John Doe', '2026-05-12'),
   ('P99999', 'VFS002', 'Approved', 'Jane Smith', '2026-04-28'),
   ('P55555', 'VFS003', 'Rejected', 'Michael Brown', '2026-05-01')
+on conflict do nothing;
+
+-- Premium users are created out of band by an admin. They track and view
+-- status for free. Standard users (self sign-ups) pay per record searched.
+insert into users (email, type) values
+  ('premium@vfs.com', 'premium')
 on conflict do nothing;
 
 -- For this prototype the anon key reads applications directly.

@@ -30,34 +30,12 @@ export default function LoginForm() {
       return;
     }
 
-    setLoading(true);
-    try {
-      // Register the user (mock or Supabase) when signing up.
-      if (mode === "signup") {
-        const res = await fetch("/api/signup", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email: email.trim() }),
-        });
-        const data = await res.json();
-        if (!res.ok) {
-          setErrors({ email: data.message || "Sign up failed." });
-          setLoading(false);
-          return;
-        }
-      }
-
-      // Simulate OTP dispatch.
-      setStep("otp");
-      setInfo(`OTP sent to ${email}. Use 123456 to continue.`);
-    } catch {
-      setErrors({ email: "Something went wrong. Please try again." });
-    } finally {
-      setLoading(false);
-    }
+    // Simulate OTP dispatch (no real provider).
+    setStep("otp");
+    setInfo(`OTP sent to ${email}. Use 123456 to continue.`);
   };
 
-  const handleVerifyOtp = (e) => {
+  const handleVerifyOtp = async (e) => {
     e.preventDefault();
     setErrors({});
 
@@ -72,8 +50,28 @@ export default function LoginForm() {
     }
 
     setLoading(true);
-    setSession(email.trim());
-    router.push("/dashboard");
+    try {
+      // Resolve (or create) the user account so the dashboard knows how to
+      // categorize them. The category itself is never shown in the UI.
+      const res = await fetch("/api/user", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: email.trim().toLowerCase() }),
+      });
+      const data = await res.json();
+
+      if (!res.ok || !data.ok) {
+        setErrors({ otp: data.message || "Could not sign you in." });
+        setLoading(false);
+        return;
+      }
+
+      setSession(email.trim().toLowerCase());
+      router.push("/dashboard");
+    } catch {
+      setErrors({ otp: "Something went wrong. Please try again." });
+      setLoading(false);
+    }
   };
 
   return (

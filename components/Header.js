@@ -22,11 +22,15 @@ export default function Header({ showAuth = true }) {
     <header className="header">
       <div
         className="header-brand"
-        style={{ cursor: "pointer" }}
         onClick={() => router.push(email ? "/dashboard" : "/")}
       >
         <span className="header-logo">VFS</span>
-        VFS Application Tracker
+        <span className="header-wordmark">
+          <span className="header-wordmark-top">
+            VFS<span>Global</span>
+          </span>
+          <span className="header-wordmark-sub">Application Tracker</span>
+        </span>
       </div>
 
       {showAuth && email && (
