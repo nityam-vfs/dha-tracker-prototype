@@ -4,14 +4,14 @@ import LoginForm from "@/components/LoginForm";
 
 export default function HomePage() {
   return (
-    <>
+    <div className="login-page">
       <Header showAuth={false} />
 
-      <main className="container-narrow">
+      <main className="login-main">
         <LoginForm />
       </main>
 
       <Footer />
-    </>
+    </div>
   );
 }

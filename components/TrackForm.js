@@ -162,10 +162,10 @@ export default function TrackForm() {
       <Toast message={toast} onClose={() => setToast("")} />
 
       <div className="card">
-        <h2 className="card-title">Track Your Applications</h2>
+        <h2 className="card-title">Verify Visa / Permit Applications</h2>
         <p className="card-subtitle">
-          Enter your passport number and VFS reference for each application you
-          want to track. You can add more than one.
+          Enter the passport number and VFS reference for each visa or permit
+          you want to verify. You can add more than one.
         </p>
 
         {apiError && <div className="alert alert-error">{apiError}</div>}

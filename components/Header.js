@@ -24,23 +24,25 @@ export default function Header({ showAuth = true }) {
         className="header-brand"
         onClick={() => router.push(email ? "/dashboard" : "/")}
       >
-        <span className="header-logo">VFS</span>
-        <span className="header-wordmark">
-          <span className="header-wordmark-top">
-            VFS<span>Global</span>
-          </span>
-          <span className="header-wordmark-sub">Application Tracker</span>
-        </span>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/customer-logo.svg"
+          alt="VFS Global"
+          className="header-logo-img"
+        />
       </div>
 
-      {showAuth && email && (
-        <div className="header-actions">
-          <span className="header-email">{email}</span>
-          <button className="btn btn-ghost" onClick={handleLogout}>
-            Logout
-          </button>
-        </div>
-      )}
+      <div className="header-actions">
+        {showAuth && email && (
+          <>
+            <span className="header-email">{email}</span>
+            <button className="btn btn-ghost" onClick={handleLogout}>
+              Logout
+            </button>
+          </>
+        )}
+        <span className="header-lang">English ▾</span>
+      </div>
     </header>
   );
 }

@@ -1,8 +1,8 @@
-# VFS Application Tracker (DHA Prototype)
+# VFS Visa / Permit Verification Portal (DHA Prototype)
 
-A production-style prototype for tracking DHA visa applications submitted through
-VFS Global. Built with **Next.js (App Router)**, **Node.js API routes**, optional
-**Supabase**, and plain CSS using VFS branding.
+A production-style prototype for verifying the status of DHA visa and permit
+applications submitted through VFS Global. Built with **Next.js (App Router)**,
+**Node.js API routes**, optional **Supabase**, and plain CSS using VFS branding.
 
 > Runs locally with **zero database setup** thanks to built-in mock data.
 > Plug in Supabase later with two environment variables.

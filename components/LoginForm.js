@@ -10,9 +10,9 @@ export default function LoginForm() {
   const router = useRouter();
 
   const [step, setStep] = useState("email"); // "email" | "otp"
-  const [mode, setMode] = useState("login"); // "login" | "signup"
   const [email, setEmail] = useState("");
   const [otp, setOtp] = useState("");
+  const [robot, setRobot] = useState(false);
   const [errors, setErrors] = useState({});
   const [info, setInfo] = useState("");
   const [loading, setLoading] = useState(false);
@@ -20,19 +20,23 @@ export default function LoginForm() {
   const validateEmail = (value) =>
     /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim());
 
-  const handleSendOtp = async (e) => {
+  const handleSendOtp = (e) => {
     e.preventDefault();
-    setErrors({});
-    setInfo("");
+    const next = {};
 
     if (!validateEmail(email)) {
-      setErrors({ email: "Please enter a valid email address." });
-      return;
+      next.email = "Please enter a valid email address.";
+    }
+    if (!robot) {
+      next.robot = "Please confirm you are not a robot.";
     }
 
+    setErrors(next);
+    if (Object.keys(next).length > 0) return;
+
     // Simulate OTP dispatch (no real provider).
-    setStep("otp");
     setInfo(`OTP sent to ${email}. Use 123456 to continue.`);
+    setStep("otp");
   };
 
   const handleVerifyOtp = async (e) => {
@@ -75,15 +79,8 @@ export default function LoginForm() {
   };
 
   return (
-    <div className="card login-card">
-      <h2 className="card-title">
-        {mode === "login" ? "Sign in to track" : "Create an account"}
-      </h2>
-      <p className="card-subtitle">
-        {step === "email"
-          ? "Enter your email to receive a one-time password."
-          : "Enter the 6-digit OTP we sent to your email."}
-      </p>
+    <div className="login-card">
+      <h1 className="login-title">SIGN IN</h1>
 
       {info && <div className="alert alert-info">{info}</div>}
 
@@ -91,7 +88,7 @@ export default function LoginForm() {
         <form onSubmit={handleSendOtp} noValidate>
           <div className="field">
             <label className="label" htmlFor="email">
-              Email address
+              Email
             </label>
             <input
               id="email"
@@ -107,7 +104,23 @@ export default function LoginForm() {
             )}
           </div>
 
-          <button className="btn btn-primary" type="submit" disabled={loading}>
+          <div className="login-row">
+            <label className="robot-check">
+              <input
+                type="checkbox"
+                checked={robot}
+                onChange={(e) => setRobot(e.target.checked)}
+              />
+              I&apos;m not a robot
+            </label>
+          </div>
+          {errors.robot && (
+            <p className="field-hint error" style={{ marginTop: 0 }}>
+              {errors.robot}
+            </p>
+          )}
+
+          <button className="btn btn-accent" type="submit" disabled={loading}>
             {loading ? <span className="spinner" /> : "Send OTP"}
           </button>
         </form>
@@ -158,24 +171,10 @@ export default function LoginForm() {
         </form>
       )}
 
-      <div className="divider" />
-
-      <div style={{ textAlign: "center", fontSize: 14, color: "var(--muted)" }}>
-        {mode === "login" ? "New to VFS Tracker? " : "Already have an account? "}
-        <button
-          type="button"
-          className="btn-link"
-          onClick={() => {
-            setMode(mode === "login" ? "signup" : "login");
-            setStep("email");
-            setErrors({});
-            setInfo("");
-            setOtp("");
-          }}
-        >
-          {mode === "login" ? "Create an account" : "Sign in"}
-        </button>
-      </div>
+      <p className="field-hint muted login-hint">
+        Demo login — email: any address, OTP: <strong>123456</strong>. Use{" "}
+        <strong>premium@vfs.com</strong> for premium access.
+      </p>
     </div>
   );
 }

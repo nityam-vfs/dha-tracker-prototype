@@ -1,8 +1,9 @@
 import "./globals.css";
 
 export const metadata = {
-  title: "VFS Application Tracker",
-  description: "Track your DHA visa application status with VFS Global.",
+  title: "VFS Global — Visa / Permit Verification Portal",
+  description:
+    "Verify the status of DHA visa and permit applications through VFS Global.",
 };
 
 export default function RootLayout({ children }) {

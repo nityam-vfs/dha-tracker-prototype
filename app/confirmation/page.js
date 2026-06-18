@@ -133,7 +133,7 @@ export default function ConfirmationPage() {
           <div className="card invoice-card">
             <div className="invoice-head">
               <div>
-                <span className="header-logo">VFS</span>
+                <span className="invoice-logo">VFS</span>
               </div>
               <div style={{ textAlign: "right" }}>
                 <div className="invoice-title">INVOICE</div>
